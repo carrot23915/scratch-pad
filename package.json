@@ -1,0 +1,59 @@
+{
+  "name": "scratch-pad",
+  "productName": "Scratch Pad",
+  "version": "1.0.0",
+  "description": "Multi-tab notes scratch pad with Import/Export",
+  "main": "main.js",
+  "author": "Scratch Pad",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable --x64",
+    "build:dir": "electron-builder --win dir --x64",
+    "build:zip": "electron-builder --win zip --x64"
+  },
+  "build": {
+    "appId": "com.scratchpad.app",
+    "productName": "Scratch Pad",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "renderer.js",
+      "styles.css",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+      "signAndEditExecutable": false
+    },
+    "portable": {
+      "artifactName": "Scratch Pad ${version} Portable.exe"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false
+    }
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}

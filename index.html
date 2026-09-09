@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>Scratch Pad</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <div id="tab-bar">
+      <div id="tabs"></div>
+      <button id="btn-add-tab" class="tab-add" title="Add tab">+</button>
+    </div>
+
+    <div id="toolbar">
+      <button id="btn-import-export" class="btn">Import/Export Notes</button>
+      <button id="btn-clear" class="btn btn-danger">Clear</button>
+      <button id="btn-copy" class="btn">Copy</button>
+      <span id="status" class="status"></span>
+    </div>
+
+    <textarea id="notes" placeholder="Type your notes here..." spellcheck="true"></textarea>
+  </div>
+
+  <!-- Import/Export Modal -->
+  <div id="modal-overlay" class="hidden">
+    <div id="modal">
+      <h2>Import / Export Notes</h2>
+      <p>
+        Import or export notes from Scratch Pad, useful for when moving computers.
+        Notes exported download as a text file with the date as the file name.
+      </p>
+      <p class="warning">
+        Warning: Please ensure there're no sensitive data before exporting.
+      </p>
+      <div class="modal-actions">
+        <button id="btn-export" class="btn btn-primary">Export</button>
+        <button id="btn-import" class="btn btn-primary">Import</button>
+        <button id="btn-modal-close" class="btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="hidden"></div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
