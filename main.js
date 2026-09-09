@@ -12,7 +12,7 @@ function createWindow() {
     height: 700,
     minWidth: 500,
     minHeight: 400,
-    title: 'Scratch Pad',
+    title: 'Scratch Pad Portable',
     backgroundColor: '#1a1a1a',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -53,7 +53,7 @@ ipcMain.handle('confirm-close', async (_event, message) => {
     buttons: ['Close and save', 'Close without saving', 'Cancel'],
     defaultId: 0,
     cancelId: 2,
-    title: 'Scratch Pad',
+    title: 'Scratch Pad Portable',
     message: message || 'Do you want to save your notes before closing?',
     detail: 'Close and save writes a text file to Downloads (same as Export).',
     noLink: true,
@@ -92,7 +92,7 @@ ipcMain.handle('export-notes', async (_event, content) => {
   try {
     const downloads = app.getPath('downloads');
     const dateStr = new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
-    const filename = `Scratch Pad Export ${dateStr}.txt`;
+    const filename = `Scratch Pad Portable Export ${dateStr}.txt`;
     const fullPath = path.join(downloads, filename);
     const normalized = content.replace(/\r\n/g, '\n').replace(/\n/g, '\r\n');
     fs.writeFileSync(fullPath, normalized, 'utf8');
@@ -105,7 +105,7 @@ ipcMain.handle('export-notes', async (_event, content) => {
 
 ipcMain.handle('import-pick-file', async () => {
   const result = await dialog.showOpenDialog(mainWindow, {
-    title: 'Import Scratch Pad Notes',
+    title: 'Import Scratch Pad Portable Notes',
     filters: [{ name: 'Text Files', extensions: ['txt'] }],
     properties: ['openFile'],
   });

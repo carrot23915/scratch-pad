@@ -1,6 +1,16 @@
 (() => {
   const SEPARATOR = '\r\n\r\n<########################################################################################################>\r\n\r\n';
 
+  function tabNameFromNotes(notes, index) {
+    const first = String(notes || '').split(/\r?\n/, 1)[0].trim();
+    if (!first) return `Tab ${index + 1}`;
+    return first.length > 48 ? `${first.slice(0, 48)}…` : first;
+  }
+
+  function syncTabNameFromNotes(index) {
+    tabs[index].name = tabNameFromNotes(tabs[index].notes, index);
+  }
+
   let tabs = [{ name: 'Tab 1', notes: '' }];
   let activeIndex = 0;
   let saveTimer = null;
@@ -41,12 +51,7 @@
       const name = document.createElement('span');
       name.className = 'tab-name';
       name.textContent = tab.name;
-      name.title = 'Double-click to rename';
-
-      name.addEventListener('dblclick', (e) => {
-        e.stopPropagation();
-        startRename(name, i);
-      });
+      name.title = tab.name;
 
       const close = document.createElement('button');
       close.className = 'tab-close';
@@ -64,39 +69,6 @@
     });
   }
 
-  function startRename(nameEl, index) {
-    nameEl.contentEditable = 'true';
-    nameEl.focus();
-    const range = document.createRange();
-    range.selectNodeContents(nameEl);
-    const sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-
-    const finish = () => {
-      nameEl.contentEditable = 'false';
-      const newName = nameEl.textContent.trim() || `Tab ${index + 1}`;
-      tabs[index].name = newName;
-      nameEl.textContent = newName;
-      scheduleSave();
-      nameEl.removeEventListener('blur', finish);
-      nameEl.removeEventListener('keydown', onKey);
-    };
-
-    const onKey = (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        nameEl.blur();
-      } else if (e.key === 'Escape') {
-        nameEl.textContent = tabs[index].name;
-        nameEl.blur();
-      }
-    };
-
-    nameEl.addEventListener('blur', finish);
-    nameEl.addEventListener('keydown', onKey);
-  }
-
   function switchTab(index) {
     if (index === activeIndex) return;
     // Persist current notes before switching
@@ -110,8 +82,7 @@
 
   function addTab() {
     tabs[activeIndex].notes = notesEl.value;
-    const n = tabs.length + 1;
-    tabs.push({ name: `Tab ${n}`, notes: '' });
+    tabs.push({ name: tabNameFromNotes('', tabs.length), notes: '' });
     activeIndex = tabs.length - 1;
     notesEl.value = '';
     renderTabs();
@@ -202,9 +173,10 @@
     let importCount = 0;
     chunks.forEach((chunk) => {
       importCount += 1;
+      const notes = chunk.replace(/\r\n/g, '\n');
       tabs.push({
-        name: `Imported ${importCount}`,
-        notes: chunk.replace(/\r\n/g, '\n'),
+        name: tabNameFromNotes(notes, tabs.length),
+        notes,
       });
     });
     activeIndex = tabs.length - 1;
@@ -250,6 +222,17 @@
 
   notesEl.addEventListener('input', () => {
     tabs[activeIndex].notes = notesEl.value;
+    const newName = tabNameFromNotes(notesEl.value, activeIndex);
+    if (tabs[activeIndex].name !== newName) {
+      tabs[activeIndex].name = newName;
+      const label = tabsEl.querySelector('.tab.active .tab-name');
+      if (label) {
+        label.textContent = newName;
+        label.title = newName;
+      } else {
+        renderTabs();
+      }
+    }
     scheduleSave();
   });
 
@@ -278,19 +261,19 @@
 
     const data = await window.scratchPad.loadData();
     if (data && Array.isArray(data.tabs) && data.tabs.length) {
-      tabs = data.tabs.map((t) => ({
-        name: t.name || 'Tab',
-        notes: typeof t.notes === 'string' ? t.notes : '',
-      }));
+      tabs = data.tabs.map((t, i) => {
+        const notes = typeof t.notes === 'string' ? t.notes : '';
+        return { name: tabNameFromNotes(notes, i), notes };
+      });
       activeIndex = Math.min(
         typeof data.activeIndex === 'number' ? data.activeIndex : 0,
         tabs.length - 1
       );
     } else {
       tabs = [{
-        name: 'Tab 1',
-        notes: 'Welcome to Scratch Pad.\n\nType notes here. Use + to add tabs. Import/Export to move notes between computers.',
+        notes: 'Welcome to Scratch Pad Portable.\n\nType notes here. The tab title is the first line of your notes. Use + to add tabs. Import/Export to move notes between computers.',
       }];
+      tabs[0].name = tabNameFromNotes(tabs[0].notes, 0);
       activeIndex = 0;
     }
     notesEl.value = tabs[activeIndex].notes;

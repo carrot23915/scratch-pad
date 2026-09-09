@@ -1,14 +1,14 @@
-# Privacy Policy for Scratch Pad
+# Privacy Policy for Scratch Pad Portable
 
 **Last updated:** 9 September 2026
 
-This Privacy Policy describes how **Scratch Pad** (“the App”) handles information when you use the Windows application.
+This Privacy Policy describes how **Scratch Pad Portable** (“the App”) handles information when you use the Windows application.
 
-Scratch Pad is a local notes tool. It is designed so that **your notes stay on your device**. The developer does not operate a Scratch Pad account system, cloud sync service, or analytics backend for this App.
+Scratch Pad Portable is a local notes tool. It is designed so that **your notes stay on your device**. The developer does not operate a Scratch Pad Portable account system, cloud sync service, or analytics backend for this App.
 
 ## 1. Who we are
 
-Scratch Pad is published by the independent developer associated with the GitHub account **carrot23915** (the “Developer”).
+Scratch Pad Portable is published by the independent developer associated with the GitHub account **carrot23915** (the “Developer”).
 
 **Contact:** For privacy questions, open an issue at [https://github.com/carrot23915/scratch-pad](https://github.com/carrot23915/scratch-pad) or email **[ADD YOUR EMAIL HERE]**.
 
@@ -20,7 +20,7 @@ The App may store the following **only on your computer**:
 | --- | --- | --- |
 | Note text and tab names | Let you write and keep multi-tab notes | Local app data folder (`scratchpad.json` under the Windows app data directory used by Electron) |
 | Active tab index and related UI state | Restore your session when you reopen the App | Same local file |
-| Exported / “Close and save” text files | Create a backup file you requested | Your **Downloads** folder (filename like `Scratch Pad Export DD-MM-YYYY.txt`) |
+| Exported / “Close and save” text files | Create a backup file you requested | Your **Downloads** folder (filename like `Scratch Pad Portable Export DD-MM-YYYY.txt`) |
 | Files you choose to import | Restore notes from a previous export | Read only from the file path you select; imported text is then stored locally as notes |
 
 The Developer **does not receive** this content. It is not uploaded to the Developer’s servers because the App does not send your notes to the Developer.
@@ -42,9 +42,9 @@ The App does not include third-party advertising SDKs.
 
 ## 4. Internet and network access
 
-Scratch Pad’s features (notes, tabs, import, export / save to Downloads) work **offline** and do not require you to sign in or connect to a Developer-operated service.
+Scratch Pad Portable’s features (notes, tabs, import, export / save to Downloads) work **offline** and do not require you to sign in or connect to a Developer-operated service.
 
-If you download the App from the **Microsoft Store**, Microsoft may process information according to Microsoft’s own policies (for example Store account, downloads, and Store-related diagnostics). That processing is controlled by Microsoft, not by Scratch Pad’s note-taking features. See [Microsoft’s Privacy Statement](https://privacy.microsoft.com/).
+If you download the App from the **Microsoft Store**, Microsoft may process information according to Microsoft’s own policies (for example Store account, downloads, and Store-related diagnostics). That processing is controlled by Microsoft, not by Scratch Pad Portable’s note-taking features. See [Microsoft’s Privacy Statement](https://privacy.microsoft.com/).
 
 ## 5. How your data is used
 
@@ -69,7 +69,7 @@ Your notes may become accessible to others only if **you** share them yourself (
 
 ## 8. Children’s privacy
 
-Scratch Pad is a general-purpose productivity tool and is not directed at children under 13 (or the minimum age in your jurisdiction). We do not knowingly collect personal information from children. The App does not require accounts or personal data to function.
+Scratch Pad Portable is a general-purpose productivity tool and is not directed at children under 13 (or the minimum age in your jurisdiction). We do not knowingly collect personal information from children. The App does not require accounts or personal data to function.
 
 ## 9. Security
 
@@ -106,4 +106,4 @@ If a future update changes this, this policy and Store declarations will be upda
 
 ---
 
-*This policy is provided for the Scratch Pad Windows app as implemented (local notes, local persistence, user-triggered import/export to Downloads). It is not legal advice. Replace `[ADD YOUR EMAIL HERE]` with a real contact address before Store submission, and host this document at a stable public HTTPS URL (required by Microsoft Store).*
+*This policy is provided for the Scratch Pad Portable Windows app as implemented (local notes, local persistence, user-triggered import/export to Downloads). It is not legal advice. Replace `[ADD YOUR EMAIL HERE]` with a real contact address before Store submission, and host this document at a stable public HTTPS URL (required by Microsoft Store).*

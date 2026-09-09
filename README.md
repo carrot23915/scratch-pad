@@ -1,6 +1,6 @@
-# Scratch Pad
+# Scratch Pad Portable
 
-Multi-tab notes scratch pad (Electron) with Import/Export.
+Multi-tab notes app (Electron) with Import/Export. Tab titles come from the first line of each note.
 
 ## Development (Linux)
 
@@ -13,17 +13,20 @@ npm start
 
 Built under `dist/`:
 
-- **Portable:** `dist/Scratch Pad 1.0.0 Portable.exe` — single-file portable; copy to any Windows PC and run.
-- **Zip:** `dist/Scratch Pad-1.0.0-win-x64.zip` — unpack and run `Scratch Pad.exe`.
-- **Unpacked:** `dist/win-unpacked/Scratch Pad.exe`
+- **Portable:** `dist/Scratch Pad Portable <version>.exe` — single-file; copy to any Windows PC and run.
+- **Zip / unpacked:** run `Scratch Pad Portable.exe` inside the build output.
 
 ## Export
 
-Export writes automatically to the user's Downloads folder (no save dialog):
+Export (and **Close and save**) writes automatically to the user's Downloads folder (no save dialog):
 
-`Scratch Pad Export <en-GB-date>.txt`
+`Scratch Pad Portable Export <en-GB-date>.txt`
 
-(`/` in the date is replaced with `-` so the path is valid on Windows, e.g. `Scratch Pad Export 09-09-2026.txt`).
+(`/` in the date is replaced with `-` so the path is valid on Windows, e.g. `Scratch Pad Portable Export 09-09-2026.txt`).
+
+## Tabs
+
+Each tab's name is the **first line** of that tab's notes (updates as you type). Empty notes fall back to `Tab N`.
 
 ## Data
 
