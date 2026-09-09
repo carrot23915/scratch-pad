@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 let mainWindow;
+let allowClose = false;
 const DATA_FILE = () => path.join(app.getPath('userData'), 'scratchpad.json');
 
 function createWindow() {
@@ -22,6 +23,12 @@ function createWindow() {
 
   mainWindow.setMenuBarVisibility(false);
   mainWindow.loadFile('index.html');
+
+  mainWindow.on('close', (e) => {
+    if (allowClose) return;
+    e.preventDefault();
+    mainWindow.webContents.send('app-close-request');
+  });
 }
 
 app.whenReady().then(createWindow);
@@ -32,6 +39,25 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
+
+ipcMain.on('app-close-response', (_event, shouldClose) => {
+  if (!shouldClose || !mainWindow) return;
+  allowClose = true;
+  mainWindow.close();
+});
+
+ipcMain.handle('confirm-close', async (_event, message) => {
+  const result = await dialog.showMessageBox(mainWindow, {
+    type: 'warning',
+    buttons: ['Close', 'Cancel'],
+    defaultId: 1,
+    cancelId: 1,
+    title: 'Scratch Pad',
+    message: message || 'Are you sure you want to close without saving?',
+    noLink: true,
+  });
+  return result.response === 0;
 });
 
 ipcMain.handle('load-data', async () => {
@@ -62,11 +88,9 @@ ipcMain.handle('save-data', async (_event, data) => {
 ipcMain.handle('export-notes', async (_event, content) => {
   try {
     const downloads = app.getPath('downloads');
-    // en-GB is typically DD/MM/YYYY; '/' is illegal in Windows filenames
     const dateStr = new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
     const filename = `Scratch Pad Export ${dateStr}.txt`;
     const fullPath = path.join(downloads, filename);
-    // Ensure CRLF line endings
     const normalized = content.replace(/\r\n/g, '\n').replace(/\n/g, '\r\n');
     fs.writeFileSync(fullPath, normalized, 'utf8');
     return { ok: true, path: fullPath };
@@ -92,4 +116,3 @@ ipcMain.handle('import-pick-file', async () => {
     return { ok: false, error: String(e) };
   }
 });
-

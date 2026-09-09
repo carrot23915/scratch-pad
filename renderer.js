@@ -119,7 +119,12 @@
     notesEl.focus();
   }
 
-  function closeTab(index) {
+  async function closeTab(index) {
+    const ok = await window.scratchPad.confirmClose(
+      'Are you sure you want to close this tab without saving?'
+    );
+    if (!ok) return;
+
     if (tabs.length === 1) {
       tabs[0] = { name: 'Tab 1', notes: '' };
       activeIndex = 0;
@@ -229,8 +234,21 @@
     scheduleSave();
   });
 
+  // Window close confirmation
+  window.scratchPad.onAppCloseRequest(async () => {
+    // Flush pending autosave first
+    tabs[activeIndex].notes = notesEl.value;
+    clearTimeout(saveTimer);
+    await window.scratchPad.saveData({ tabs, activeIndex });
+    const ok = await window.scratchPad.confirmClose(
+      'Are you sure you want to close without saving?'
+    );
+    window.scratchPad.respondAppClose(ok);
+  });
+
   // Init
   (async () => {
+
     const data = await window.scratchPad.loadData();
     if (data && Array.isArray(data.tabs) && data.tabs.length) {
       tabs = data.tabs.map((t) => ({
