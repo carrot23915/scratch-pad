@@ -1,7 +1,7 @@
 {
   "name": "scratch-pad",
   "productName": "Scratch Pad",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Multi-tab notes scratch pad with Import/Export",
   "main": "main.js",
   "author": "Scratch Pad",
