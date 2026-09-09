@@ -26,6 +26,8 @@ Export (and **Close and save**) writes automatically to the user's Downloads fol
 
 ## Tabs
 
+The tab bar **wraps** as you narrow the window (rows / vertical stack) so every tab stays visible without horizontal scrolling.
+
 Each tab's name is the **first line** of that tab's notes (updates as you type). Empty notes fall back to `Tab N`.
 
 ## Data

@@ -18,9 +18,10 @@ html, body {
   height: 100vh;
 }
 
-/* Tab bar */
+/* Tab bar — wraps into rows / stacks as the window narrows (no horizontal scroll) */
 #tab-bar {
   display: flex;
+  flex-wrap: wrap;
   align-items: stretch;
   background: #111;
   border-bottom: 1px solid #333;
@@ -30,9 +31,10 @@ html, body {
 
 #tabs {
   display: flex;
-  flex: 1;
-  overflow-x: auto;
-  overflow-y: hidden;
+  flex-wrap: wrap;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: visible;
 }
 
 .tab {
@@ -45,7 +47,10 @@ html, body {
   border-bottom: 2px solid transparent;
   cursor: pointer;
   white-space: nowrap;
-  max-width: 180px;
+  /* Grow to fill a row; wrap to the next row (or full-width stack) when narrow */
+  flex: 1 1 140px;
+  min-width: 0;
+  max-width: 100%;
   user-select: none;
   font-size: 13px;
   color: #aaa;
@@ -101,7 +106,9 @@ html, body {
   font-size: 20px;
   padding: 0 14px;
   cursor: pointer;
-  flex-shrink: 0;
+  flex: 0 0 auto;
+  align-self: stretch;
+  min-height: 36px;
 }
 
 .tab-add:hover {
