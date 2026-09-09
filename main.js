@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog, clipboard } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -93,7 +93,3 @@ ipcMain.handle('import-pick-file', async () => {
   }
 });
 
-ipcMain.handle('copy-text', async (_event, text) => {
-  clipboard.writeText(text || '');
-  return { ok: true };
-});

@@ -194,17 +194,20 @@
   // Event bindings
   document.getElementById('btn-add-tab').addEventListener('click', addTab);
 
-  document.getElementById('btn-clear').addEventListener('click', () => {
-    if (!confirm('Clear notes on the active tab?')) return;
-    notesEl.value = '';
-    tabs[activeIndex].notes = '';
+  function insertSeparator() {
+    const block = '\n\n------------------------------------------\n\n';
+    const start = notesEl.selectionStart;
+    const end = notesEl.selectionEnd;
+    const value = notesEl.value;
+    notesEl.value = value.slice(0, start) + block + value.slice(end);
+    const caret = start + block.length;
+    notesEl.selectionStart = notesEl.selectionEnd = caret;
+    tabs[activeIndex].notes = notesEl.value;
     scheduleSave();
-  });
+    notesEl.focus();
+  }
 
-  document.getElementById('btn-copy').addEventListener('click', async () => {
-    await window.scratchPad.copyText(notesEl.value);
-    showToast('Notes copied to clipboard');
-  });
+  document.getElementById('btn-separator').addEventListener('click', insertSeparator);
 
   document.getElementById('btn-import-export').addEventListener('click', () => {
     modalOverlay.classList.remove('hidden');
