@@ -119,11 +119,30 @@
     notesEl.focus();
   }
 
+  async function exportLikeSave() {
+    const content = buildExportContent();
+    const result = await window.scratchPad.exportNotes(content);
+    if (result.ok) {
+      showToast(`Notes saved\n${result.path}`);
+      return true;
+    }
+    showToast(`Save failed: ${result.error || 'unknown error'}`, true);
+    return false;
+  }
+
+  async function askCloseAction(message) {
+    return window.scratchPad.confirmClose(message);
+  }
+
   async function closeTab(index) {
-    const ok = await window.scratchPad.confirmClose(
-      'Are you sure you want to close this tab without saving?'
-    );
-    if (!ok) return;
+    // Keep current textarea in sync before asking
+    tabs[activeIndex].notes = notesEl.value;
+    const action = await askCloseAction('Do you want to save your notes before closing this tab?');
+    if (action === 'cancel') return;
+    if (action === 'save') {
+      const saved = await exportLikeSave();
+      if (!saved) return;
+    }
 
     if (tabs.length === 1) {
       tabs[0] = { name: 'Tab 1', notes: '' };
@@ -236,14 +255,22 @@
 
   // Window close confirmation
   window.scratchPad.onAppCloseRequest(async () => {
-    // Flush pending autosave first
     tabs[activeIndex].notes = notesEl.value;
     clearTimeout(saveTimer);
     await window.scratchPad.saveData({ tabs, activeIndex });
-    const ok = await window.scratchPad.confirmClose(
-      'Are you sure you want to close without saving?'
-    );
-    window.scratchPad.respondAppClose(ok);
+    const action = await askCloseAction('Do you want to save your notes before closing?');
+    if (action === 'cancel') {
+      window.scratchPad.respondAppClose(false);
+      return;
+    }
+    if (action === 'save') {
+      const saved = await exportLikeSave();
+      if (!saved) {
+        window.scratchPad.respondAppClose(false);
+        return;
+      }
+    }
+    window.scratchPad.respondAppClose(true);
   });
 
   // Init

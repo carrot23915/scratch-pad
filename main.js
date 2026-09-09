@@ -50,14 +50,17 @@ ipcMain.on('app-close-response', (_event, shouldClose) => {
 ipcMain.handle('confirm-close', async (_event, message) => {
   const result = await dialog.showMessageBox(mainWindow, {
     type: 'warning',
-    buttons: ['Close', 'Cancel'],
-    defaultId: 1,
-    cancelId: 1,
+    buttons: ['Close and save', 'Close without saving', 'Cancel'],
+    defaultId: 0,
+    cancelId: 2,
     title: 'Scratch Pad',
-    message: message || 'Are you sure you want to close without saving?',
+    message: message || 'Do you want to save your notes before closing?',
+    detail: 'Close and save writes a text file to Downloads (same as Export).',
     noLink: true,
   });
-  return result.response === 0;
+  if (result.response === 0) return 'save';
+  if (result.response === 1) return 'discard';
+  return 'cancel';
 });
 
 ipcMain.handle('load-data', async () => {
