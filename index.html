@@ -17,19 +17,19 @@
     <div id="toolbar">
       <button id="btn-import-export" class="btn">Import/Export Notes</button>
       <button id="btn-separator" class="btn" title="Insert separator line">Separator</button>
+      <button id="btn-settings" class="btn">Settings</button>
       <span id="status" class="status"></span>
     </div>
 
     <textarea id="notes" placeholder="Type your notes here..." spellcheck="true"></textarea>
   </div>
 
-  <!-- Import/Export Modal -->
   <div id="modal-overlay" class="hidden">
     <div id="modal">
       <h2>Import / Export Notes</h2>
       <p>
         Import or export notes from Scratch Pad Portable, useful for when moving computers.
-        Notes exported download as a text file with the date as the file name.
+        Notes are saved as a text file with the date as the file name in your chosen save folder (Downloads by default).
       </p>
       <p class="warning">
         Warning: Please ensure there're no sensitive data before exporting.
@@ -38,6 +38,20 @@
         <button id="btn-export" class="btn btn-primary">Export</button>
         <button id="btn-import" class="btn btn-primary">Import</button>
         <button id="btn-modal-close" class="btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="settings-overlay" class="hidden">
+    <div id="settings-modal" class="modal-panel">
+      <h2>Settings</h2>
+      <p>Choose where Export and Close and save write note files. Default is your Downloads folder.</p>
+      <div class="label">Save folder</div>
+      <div id="settings-folder" class="folder-path"></div>
+      <div class="modal-actions">
+        <button id="btn-choose-folder" class="btn btn-primary">Choose folder…</button>
+        <button id="btn-reset-folder" class="btn">Use Downloads</button>
+        <button id="btn-settings-close" class="btn">Close</button>
       </div>
     </div>
   </div>

@@ -5,7 +5,10 @@ contextBridge.exposeInMainWorld('scratchPad', {
   saveData: (data) => ipcRenderer.invoke('save-data', data),
   exportNotes: (content) => ipcRenderer.invoke('export-notes', content),
   importPickFile: () => ipcRenderer.invoke('import-pick-file'),
-  confirmClose: (message) => ipcRenderer.invoke('confirm-close', message),
+  confirmClose: (payload) => ipcRenderer.invoke('confirm-close', payload),
+  getSettings: () => ipcRenderer.invoke('get-settings'),
+  pickExportFolder: () => ipcRenderer.invoke('pick-export-folder'),
+  resetExportFolder: () => ipcRenderer.invoke('reset-export-folder'),
   onAppCloseRequest: (handler) => {
     ipcRenderer.on('app-close-request', () => handler());
   },

@@ -101,14 +101,18 @@
     return false;
   }
 
-  async function askCloseAction(message) {
-    return window.scratchPad.confirmClose(message);
+  async function askCloseAction(message, allowDiscard = true) {
+    return window.scratchPad.confirmClose({ message, allowDiscard });
   }
 
   async function closeTab(index) {
     // Keep current textarea in sync before asking
     tabs[activeIndex].notes = notesEl.value;
-    const action = await askCloseAction('Do you want to save your notes before closing this tab?');
+    // Tab close: save (export) or cancel only — no close without saving
+    const action = await askCloseAction(
+      'Do you want to save your notes before closing this tab?',
+      false
+    );
     if (action === 'cancel') return;
     if (action === 'save') {
       const saved = await exportLikeSave();
@@ -236,12 +240,50 @@
     scheduleSave();
   });
 
+  // Settings
+  const settingsOverlay = document.getElementById('settings-overlay');
+  const settingsFolderEl = document.getElementById('settings-folder');
+
+  async function refreshSettingsFolder() {
+    const settings = await window.scratchPad.getSettings();
+    settingsFolderEl.textContent = settings.exportFolder || '';
+  }
+
+  document.getElementById('btn-settings').addEventListener('click', async () => {
+    await refreshSettingsFolder();
+    settingsOverlay.classList.remove('hidden');
+  });
+
+  document.getElementById('btn-settings-close').addEventListener('click', () => {
+    settingsOverlay.classList.add('hidden');
+  });
+
+  settingsOverlay.addEventListener('click', (e) => {
+    if (e.target === settingsOverlay) settingsOverlay.classList.add('hidden');
+  });
+
+  document.getElementById('btn-choose-folder').addEventListener('click', async () => {
+    const result = await window.scratchPad.pickExportFolder();
+    if (result.ok && result.settings) {
+      settingsFolderEl.textContent = result.settings.exportFolder;
+      showToast('Save folder updated');
+    }
+  });
+
+  document.getElementById('btn-reset-folder').addEventListener('click', async () => {
+    const result = await window.scratchPad.resetExportFolder();
+    if (result.ok && result.settings) {
+      settingsFolderEl.textContent = result.settings.exportFolder;
+      showToast('Save folder reset to Downloads');
+    }
+  });
+
   // Window close confirmation
   window.scratchPad.onAppCloseRequest(async () => {
     tabs[activeIndex].notes = notesEl.value;
     clearTimeout(saveTimer);
     await window.scratchPad.saveData({ tabs, activeIndex });
-    const action = await askCloseAction('Do you want to save your notes before closing?');
+    const action = await askCloseAction('Do you want to save your notes before closing?', true);
     if (action === 'cancel') {
       window.scratchPad.respondAppClose(false);
       return;
