@@ -106,18 +106,8 @@
   }
 
   async function closeTab(index) {
-    // Keep current textarea in sync before asking
+    // Sync current textarea, then close with no prompt
     tabs[activeIndex].notes = notesEl.value;
-    // Tab close: save (export) or cancel only — no close without saving
-    const action = await askCloseAction(
-      'Do you want to save your notes before closing this tab?',
-      false
-    );
-    if (action === 'cancel') return;
-    if (action === 'save') {
-      const saved = await exportLikeSave();
-      if (!saved) return;
-    }
 
     if (tabs.length === 1) {
       tabs[0] = { name: 'Tab 1', notes: '' };
