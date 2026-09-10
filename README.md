@@ -33,3 +33,7 @@ Each tab's name is the **first line** of that tab's notes (updates as you type).
 ## Data
 
 Tabs persist to `scratchpad.json` under Electron `userData`.
+
+## Window
+
+The window is freely resizable (no practical minimum size).

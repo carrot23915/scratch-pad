@@ -10,8 +10,10 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,
     height: 700,
-    minWidth: 500,
-    minHeight: 400,
+    minWidth: 1,
+    minHeight: 1,
+    resizable: true,
+    maximizable: true,
     title: 'Scratch Pad Portable',
     backgroundColor: '#1a1a1a',
     webPreferences: {
