@@ -1,7 +1,7 @@
 {
   "name": "scratch-pad-portable",
   "productName": "Scratch Pad Portable",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Scratch Pad Portable \u2014 multi-tab notes with Import/Export",
   "main": "main.js",
   "author": "Scratch Pad Portable",
@@ -10,7 +10,8 @@
     "start": "electron .",
     "build": "electron-builder --win portable --x64",
     "build:dir": "electron-builder --win dir --x64",
-    "build:zip": "electron-builder --win zip --x64"
+    "build:zip": "electron-builder --win zip --x64",
+    "build:msix": "electron-builder --win appx --x64"
   },
   "build": {
     "appId": "com.scratchpadportable.app",
@@ -35,7 +36,7 @@
           ]
         },
         {
-          "target": "zip",
+          "target": "appx",
           "arch": [
             "x64"
           ]
@@ -50,6 +51,18 @@
     "nsis": {
       "oneClick": true,
       "perMachine": false
+    },
+    "appx": {
+      "identityName": "ScratchPadPortable.ScratchPadPortable",
+      "applicationId": "ScratchPadPortable",
+      "publisher": "CN=ScratchPadPortable",
+      "publisherDisplayName": "Scratch Pad Portable",
+      "displayName": "Scratch Pad Portable",
+      "languages": [
+        "en-US"
+      ],
+      "showNameOnTiles": true,
+      "setBuildNumber": true
     }
   },
   "devDependencies": {
