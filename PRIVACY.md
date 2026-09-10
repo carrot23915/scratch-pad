@@ -1,6 +1,6 @@
 # Privacy Policy for Scratch Pad Portable
 
-**Last updated:** 9 September 2026
+**Last updated:** 10 September 2026
 
 This Privacy Policy describes how **Scratch Pad Portable** (“the App”) handles information when you use the Windows application.
 
@@ -8,9 +8,9 @@ Scratch Pad Portable is a local notes tool. It is designed so that **your notes 
 
 ## 1. Who we are
 
-Scratch Pad Portable is published by the independent developer associated with the GitHub account **carrot23915** (the “Developer”).
+Scratch Pad Portable is published by an independent developer (the “Developer”).
 
-**Contact:** For privacy questions, open an issue at [https://github.com/carrot23915/scratch-pad](https://github.com/carrot23915/scratch-pad) or email **[ADD YOUR EMAIL HERE]**.
+**Contact:** For privacy questions, email **Phoenixms@outlook.com**.
 
 ## 2. Information the App stores on your device
 
@@ -106,4 +106,4 @@ If a future update changes this, this policy and Store declarations will be upda
 
 ---
 
-*This policy is provided for the Scratch Pad Portable Windows app as implemented (local notes, local persistence, user-triggered import/export to Downloads). It is not legal advice. Replace `[ADD YOUR EMAIL HERE]` with a real contact address before Store submission, and host this document at a stable public HTTPS URL (required by Microsoft Store).*
+*This policy is provided for the Scratch Pad Portable Windows app as implemented (local notes, local persistence, user-triggered import/export to Downloads). It is not legal advice. Host this document at a stable public HTTPS URL for Microsoft Store submission.*
