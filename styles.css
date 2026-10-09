@@ -4,12 +4,39 @@
   padding: 0;
 }
 
+/* Roboto, bundled locally (same font files as the original extension) */
+@font-face {
+  font-family: Roboto;
+  src: url("fonts/Roboto-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url("fonts/Roboto-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url("fonts/Roboto-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
 html, body {
   height: 100%;
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: Roboto, "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
   background: #1a1a1a;
   color: #e8e8e8;
+}
+
+button, input, textarea {
+  font-family: inherit;
 }
 
 #app {
@@ -18,41 +45,29 @@ html, body {
   height: 100vh;
 }
 
-/* Tab bar — wraps into rows / stacks as the window narrows (no horizontal scroll) */
+/* Tab bar — layout matches the original extension: ~4 tabs per row, wrapping */
 #tab-bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
   background: #111;
   border-bottom: 1px solid #333;
-  min-height: 36px;
   flex-shrink: 0;
 }
 
-#tabs {
+.tab-container {
   display: flex;
-  flex-wrap: wrap;
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow: visible;
+  flex-flow: row wrap;
+  border-radius: 3px;
+  gap: 2px;
+  padding: 3px;
 }
 
 .tab {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  background: #1e1e1e;
-  border-right: 1px solid #333;
-  border-bottom: 2px solid transparent;
+  width: 23%;
+  max-width: 200px;
+  font-size: 11px;
+  padding: 6px;
+  border-radius: 3px;
   cursor: pointer;
-  white-space: nowrap;
-  /* Grow to fill a row; wrap to the next row (or full-width stack) when narrow */
-  flex: 1 1 140px;
-  min-width: 0;
-  max-width: 100%;
   user-select: none;
-  font-size: 13px;
   color: #aaa;
 }
 
@@ -62,58 +77,67 @@ html, body {
 }
 
 .tab.active {
-  background: #2a2a2a;
+  background: rgba(74, 158, 255, 0.5);
   color: #fff;
-  border-bottom-color: #4a9eff;
+}
+
+.tab.dragging {
+  opacity: 0.4;
+}
+
+.tab.drop-before {
+  box-shadow: inset 2px 0 0 #4a9eff;
+}
+
+.tab.drop-after {
+  box-shadow: inset -2px 0 0 #4a9eff;
+}
+
+.tabs-wrapper {
+  display: flex;
+  justify-content: space-between;
 }
 
 .tab-name {
-  overflow: hidden;
   text-overflow: ellipsis;
-  flex: 1;
-  outline: none;
-  min-width: 40px;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.tab-name[contenteditable="true"] {
-  background: #333;
-  padding: 1px 4px;
-  border-radius: 3px;
-  color: #fff;
-}
-
-.tab-close {
-  background: transparent;
-  border: none;
-  color: #777;
-  cursor: pointer;
-  font-size: 14px;
-  line-height: 1;
-  padding: 2px 4px;
-  border-radius: 3px;
+.tab-icon {
+  margin-left: 6px;
+  display: flex;
+  align-items: center;
   flex-shrink: 0;
+  color: inherit;
 }
 
-.tab-close:hover {
-  background: #444;
-  color: #fff;
+.tab-icon:hover {
+  color: #4a9eff;
 }
 
-.tab-add {
-  background: transparent;
-  border: none;
-  color: #aaa;
-  font-size: 20px;
-  padding: 0 14px;
+.tab-icon svg,
+.add-tab-btn svg {
+  height: 1em;
+  display: block;
+}
+
+.add-tab-container {
+  margin-left: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.add-tab-btn {
+  font-size: 11px;
+  color: #e8e8e8;
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  flex: 0 0 auto;
-  align-self: stretch;
-  min-height: 36px;
 }
 
-.tab-add:hover {
-  color: #fff;
-  background: #222;
+.add-tab-btn:hover {
+  color: #4a9eff;
 }
 
 /* Toolbar */
@@ -178,10 +202,10 @@ html, body {
   resize: none;
   border: none;
   outline: none;
-  padding: 16px;
-  font-size: 14px;
+  padding: 6px;
+  font-size: 13px;
   line-height: 1.5;
-  font-family: "Consolas", "Courier New", monospace;
+  font-family: Roboto, "Segoe UI", Arial, sans-serif;
   background: #1a1a1a;
   color: #e8e8e8;
 }
