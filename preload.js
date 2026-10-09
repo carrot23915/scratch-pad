@@ -9,6 +9,16 @@ contextBridge.exposeInMainWorld('scratchPad', {
   getSettings: () => ipcRenderer.invoke('get-settings'),
   pickExportFolder: () => ipcRenderer.invoke('pick-export-folder'),
   resetExportFolder: () => ipcRenderer.invoke('reset-export-folder'),
+  setFontSize: (size) => ipcRenderer.invoke('set-font-size', size),
+  setBackupOptions: (opts) => ipcRenderer.invoke('set-backup-options', opts),
+  pickBackupFolder: () => ipcRenderer.invoke('pick-backup-folder'),
+  resetBackupFolder: () => ipcRenderer.invoke('reset-backup-folder'),
+  openBackupFolder: () => ipcRenderer.invoke('open-backup-folder'),
+  backupNow: (data) => ipcRenderer.invoke('backup-now', data),
+  restoreBackup: (current) => ipcRenderer.invoke('restore-backup', current),
+  onBackupStatus: (handler) => {
+    ipcRenderer.on('backup-status', (_e, status) => handler(status));
+  },
   onAppCloseRequest: (handler) => {
     ipcRenderer.on('app-close-request', () => handler());
   },

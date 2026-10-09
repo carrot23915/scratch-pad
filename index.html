@@ -20,7 +20,18 @@
       <span id="status" class="status"></span>
     </div>
 
-    <textarea id="notes" placeholder="Type your notes here..." spellcheck="true"></textarea>
+    <div id="find-bar" class="hidden" role="search">
+      <input id="find-input" type="text" placeholder="Find in notes" spellcheck="false" autocomplete="off" />
+      <span id="find-count" class="find-count"></span>
+      <button id="find-prev" class="find-btn" title="Previous match (Shift+Enter)" aria-label="Previous match">&#8593;</button>
+      <button id="find-next" class="find-btn" title="Next match (Enter)" aria-label="Next match">&#8595;</button>
+      <button id="find-close" class="find-btn" title="Close (Esc)" aria-label="Close find">&#215;</button>
+    </div>
+
+    <div id="notes-wrap">
+      <div id="notes-backdrop" aria-hidden="true"></div>
+      <textarea id="notes" placeholder="Type your notes here..." spellcheck="true"></textarea>
+    </div>
   </div>
 
   <div id="modal-overlay" class="hidden">
@@ -44,12 +55,57 @@
   <div id="settings-overlay" class="hidden">
     <div id="settings-modal" class="modal-panel">
       <h2>Settings</h2>
-      <p>Choose where Export and Close and save write note files. Default is your Downloads folder.</p>
-      <div class="label">Save folder</div>
-      <div id="settings-folder" class="folder-path"></div>
+
+      <section class="settings-section">
+        <h3>Save folder</h3>
+        <p>Where Export and Close and save write note files. Default is your Downloads folder.</p>
+        <div id="settings-folder" class="folder-path"></div>
+        <div class="row-actions">
+          <button id="btn-choose-folder" class="btn btn-primary">Choose folder…</button>
+          <button id="btn-reset-folder" class="btn">Use Downloads</button>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h3>Notes font size</h3>
+        <div class="font-row">
+          <button id="btn-font-dec" class="btn btn-small" title="Smaller (Ctrl+-)" aria-label="Smaller">&#8722;</button>
+          <input id="font-size" type="number" min="10" max="28" step="1" value="13" aria-label="Notes font size in pixels" />
+          <span class="unit">px</span>
+          <button id="btn-font-inc" class="btn btn-small" title="Larger (Ctrl+=)" aria-label="Larger">+</button>
+          <button id="btn-font-reset" class="btn btn-small" title="Reset (Ctrl+0)">Reset</button>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h3>Auto backup</h3>
+        <div class="backup-grid">
+          <label for="backup-interval">Back up</label>
+          <select id="backup-interval">
+            <option value="off">Off</option>
+            <option value="15m">Every 15 minutes</option>
+            <option value="1h">Every hour</option>
+            <option value="6h">Every 6 hours</option>
+            <option value="1d">Daily</option>
+            <option value="1w">Weekly</option>
+          </select>
+          <label for="backup-keep">Keep last</label>
+          <div><input id="backup-keep" type="number" min="1" max="999" step="1" value="30" /> <span class="unit">backups</span></div>
+        </div>
+        <div id="backup-folder" class="folder-path"></div>
+        <div class="row-actions">
+          <button id="btn-backup-folder" class="btn">Change…</button>
+          <button id="btn-backup-folder-reset" class="btn">Reset</button>
+          <button id="btn-backup-open" class="btn">Open folder</button>
+        </div>
+        <div class="row-actions">
+          <span id="backup-last" class="backup-last"></span>
+          <button id="btn-backup-now" class="btn">Back up now</button>
+          <button id="btn-backup-restore" class="btn">Restore from backup…</button>
+        </div>
+      </section>
+
       <div class="modal-actions">
-        <button id="btn-choose-folder" class="btn btn-primary">Choose folder…</button>
-        <button id="btn-reset-folder" class="btn">Use Downloads</button>
         <button id="btn-settings-close" class="btn">Close</button>
       </div>
     </div>

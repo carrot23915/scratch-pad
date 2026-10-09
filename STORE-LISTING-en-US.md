@@ -13,12 +13,15 @@ Scratch Pad Portable is a lightweight multi-tab notes app for Windows. Write fre
 
 **Features**
 - Multi-tab notes with titles taken from the first line you type
-- Tabs wrap and stack when you narrow the window so you can see them all
-- Freely resizable window
-- Import and export notes as plain text files
-- Export and “Close and save” write a dated file to your Downloads folder
+- Tabs wrap onto new rows as you add more; drag to reorder, middle-click to close
+- Reopen a closed tab with Ctrl+Shift+T
+- Find in notes (Ctrl+F) with match count and next/previous
+- Spell check with right-click suggestions
+- Adjustable notes font size (Settings or Ctrl+= / Ctrl+-)
+- Automatic backups (every 15 minutes to weekly) to a folder you choose, with one-click restore
+- Remembers window size and position
+- Import and export notes as plain text files to a folder you choose
 - Separator button inserts a clean dashed divider with blank lines
-- Confirmation when closing the app or a tab: Close and save, Close without saving, or Cancel
 - Works offline — no account required
 - Your notes are stored locally on your device
 
@@ -26,7 +29,7 @@ Scratch Pad Portable is a lightweight multi-tab notes app for Windows. Write fre
 Scratch Pad Portable does not send your notes to the developer. See the privacy policy for details.
 
 ## What’s new in this version
-Initial Microsoft Store release of Scratch Pad Portable: multi-tab local notes, import/export to Downloads, wrapping tabs, and close-and-save confirmations.
+Spell check with suggestions, find in notes (Ctrl+F), reopen closed tabs (Ctrl+Shift+T), adjustable font size, automatic local backups with restore, and the window now remembers its size and position.
 
 ## Keywords / search terms (comma-separated; avoid trademarked names)
 notes, notepad, scratch pad, sticky notes, text editor, multi tab notes, note taking, offline notes, export notes, portable notes
