@@ -20,7 +20,7 @@ The App may store the following **only on your computer**:
 | --- | --- | --- |
 | Note text and tab names | Let you write and keep multi-tab notes | Local app data folder (`scratchpad.json` under the Windows app data directory used by Electron) |
 | Active tab index and related UI state | Restore your session when you reopen the App | Same local file |
-| App settings (save folder, notes font size, backup options, window size and position) | Remember your preferences | Local app data folder (`settings.json`, next to `scratchpad.json`) |
+| App settings (save folder, notes font and font size, backup options, window size and position) | Remember your preferences | Local app data folder (`settings.json`, next to `scratchpad.json`) |
 | Exported / “Close and save” text files | Create a copy of your notes you requested | The save folder you choose in Settings (default: your **Downloads** folder; filename like `Scratch Pad Portable Export DD-MM-YYYY.txt`) |
 | Automatic backups (optional) | Keep snapshots of all tabs so you can restore them | A local folder you choose in Settings (default: **Documents\Scratch Pad Backups**; files like `ScratchPad-backup-2026-10-09_20-05.json`). You can turn backups off; the App keeps only the most recent backups (30 by default) and deletes older ones it created |
 | Files you choose to import | Restore notes from a previous export | Read only from the file path you select; imported text is then stored locally as notes |

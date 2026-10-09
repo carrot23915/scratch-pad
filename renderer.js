@@ -500,6 +500,69 @@
     }
   }
 
+  // ---------- Notes font family ----------
+  // Keys must match FONT_FAMILIES in main.js. Roboto is bundled; others are Windows system fonts.
+  const FONT_FAMILIES = [
+    { name: 'Roboto', stack: 'Roboto, "Segoe UI", Arial, sans-serif' },
+    { name: 'Segoe UI', stack: '"Segoe UI", Roboto, Arial, sans-serif' },
+    { name: 'Arial', stack: 'Arial, "Helvetica Neue", Helvetica, sans-serif' },
+    { name: 'Calibri', stack: 'Calibri, Carlito, "Segoe UI", Arial, sans-serif' },
+    { name: 'Consolas', stack: 'Consolas, "Cascadia Mono", "Courier New", monospace' },
+    { name: 'Cascadia Mono', stack: '"Cascadia Mono", Consolas, "Courier New", monospace' },
+    { name: 'Georgia', stack: 'Georgia, "Times New Roman", serif' },
+    { name: 'Times New Roman', stack: '"Times New Roman", Times, serif' },
+    { name: 'Verdana', stack: 'Verdana, Geneva, sans-serif' },
+  ];
+  let fontFamilyDefault = 'Roboto';
+  let fontFamily = 'Roboto';
+  const fontFamilyEl = document.getElementById('font-family');
+
+  FONT_FAMILIES.forEach((f) => {
+    const opt = document.createElement('option');
+    opt.value = f.name;
+    opt.textContent = f.name + (f.name === 'Roboto' ? ' (default)' : '');
+    opt.style.fontFamily = f.stack; // preview each option in its own font
+    fontFamilyEl.appendChild(opt);
+  });
+
+  function findFontFamily(name) {
+    return FONT_FAMILIES.find((f) => f.name === name)
+      || FONT_FAMILIES.find((f) => f.name === fontFamilyDefault)
+      || FONT_FAMILIES[0];
+  }
+
+  function applyFontFamily(name) {
+    const f = findFontFamily(name);
+    fontFamily = f.name;
+    // Same font on textarea and find backdrop so highlights line up
+    notesEl.style.fontFamily = f.stack;
+    backdropEl.style.fontFamily = f.stack;
+    fontFamilyEl.value = f.name;
+    fontFamilyEl.style.fontFamily = f.stack;
+    if (findOpen) {
+      renderFind();
+      scrollToCurrentMatch();
+    }
+  }
+
+  async function setFontFamily(name) {
+    applyFontFamily(name);
+    try {
+      await window.scratchPad.setFontFamily(fontFamily);
+    } catch (e) {
+      showToast('Could not save font', true);
+    }
+  }
+
+  fontFamilyEl.addEventListener('change', () => setFontFamily(fontFamilyEl.value));
+
+  // A web font (Roboto) may finish loading after the first render; re-sync find highlights
+  if (document.fonts && document.fonts.addEventListener) {
+    document.fonts.addEventListener('loadingdone', () => {
+      if (findOpen) renderFind();
+    });
+  }
+
   document.getElementById('btn-font-dec').addEventListener('click', () => setFontSize(fontSize - 1));
   document.getElementById('btn-font-inc').addEventListener('click', () => setFontSize(fontSize + 1));
   document.getElementById('btn-font-reset').addEventListener('click', () => setFontSize(fontDefault));
@@ -624,6 +687,9 @@
     fontInput.max = String(fontMax);
     if (typeof st.fontSize === 'number' && st.fontSize !== fontSize) setFontSize(st.fontSize, false);
     else fontInput.value = String(fontSize);
+    if (typeof st.fontFamilyDefault === 'string') fontFamilyDefault = st.fontFamilyDefault;
+    if (st.fontFamily !== fontFamily) applyFontFamily(st.fontFamily);
+    else fontFamilyEl.value = fontFamily;
     backupIntervalEl.value = st.backupInterval || '1d';
     backupKeepEl.value = String(st.backupKeep || 30);
     backupFolderEl.textContent = st.backupFolder || '';
@@ -812,7 +878,7 @@
       );
     } else {
       tabs = [{
-        notes: 'Welcome to Scratch Pad Portable.\n\nType notes here. The tab title is the first line of your notes. Use + or F1 to add tabs; drag tabs to reorder; middle-click a tab to close it.\n\nShortcuts:\n  F1  New tab\n  Ctrl+Shift+T  Reopen closed tab\n  Ctrl+F  Find in notes\n  Ctrl+= / Ctrl+-  Bigger / smaller text (Ctrl+0 resets)\n\nRight-click for spelling suggestions. Settings has the save folder, font size and automatic backups (Documents\\Scratch Pad Backups by default). Import/Export moves notes between computers.',
+        notes: 'Welcome to Scratch Pad Portable.\n\nType notes here. The tab title is the first line of your notes. Use + or F1 to add tabs; drag tabs to reorder; middle-click a tab to close it.\n\nShortcuts:\n  F1  New tab\n  Ctrl+Shift+T  Reopen closed tab\n  Ctrl+F  Find in notes\n  Ctrl+= / Ctrl+-  Bigger / smaller text (Ctrl+0 resets)\n\nRight-click for spelling suggestions. Settings has the save folder, font, font size and automatic backups (Documents\\Scratch Pad Backups by default). Import/Export moves notes between computers.',
       }];
       tabs[0].name = tabNameFromNotes(tabs[0].notes);
       activeIndex = 0;

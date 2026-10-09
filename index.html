@@ -67,8 +67,13 @@
       </section>
 
       <section class="settings-section">
-        <h3>Notes font size</h3>
+        <h3>Notes font</h3>
         <div class="font-row">
+          <label for="font-family" class="font-label">Font</label>
+          <select id="font-family" aria-label="Notes font"></select>
+        </div>
+        <div class="font-row">
+          <label for="font-size" class="font-label">Size</label>
           <button id="btn-font-dec" class="btn btn-small" title="Smaller (Ctrl+-)" aria-label="Smaller">&#8722;</button>
           <input id="font-size" type="number" min="10" max="28" step="1" value="13" aria-label="Notes font size in pixels" />
           <span class="unit">px</span>

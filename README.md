@@ -34,7 +34,7 @@ Shortcuts: F1 new tab, Ctrl+Shift+T reopen closed tab, Ctrl+F find, Ctrl+= / Ctr
 
 ## Data
 
-Tabs persist to `scratchpad.json` and settings (save folder, font size, backup options, window bounds) to `settings.json` under Electron `userData`.
+Tabs persist to `scratchpad.json` and settings (save folder, notes font, font size, backup options, window bounds) to `settings.json` under Electron `userData`.
 
 Automatic backups (default: daily, keep last 30) are JSON snapshots of all tabs written to `Documents\Scratch Pad Backups` (changeable in Settings), named `ScratchPad-backup-YYYY-MM-DD_HH-mm.json`. They live outside the app data folder so they survive uninstalling the Store version. Restore from Settings.
 

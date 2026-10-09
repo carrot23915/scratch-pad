@@ -18,6 +18,12 @@ const DEFAULT_HEIGHT = 700;
 const FONT_MIN = 10;
 const FONT_MAX = 28;
 const FONT_DEFAULT = 13;
+// Notes font family. Roboto is bundled; the rest are standard Windows system fonts.
+// Keep in sync with FONT_FAMILIES in renderer.js.
+const FONT_FAMILIES = [
+  'Roboto', 'Segoe UI', 'Arial', 'Calibri', 'Consolas', 'Cascadia Mono', 'Georgia', 'Times New Roman', 'Verdana',
+];
+const FONT_FAMILY_DEFAULT = 'Roboto';
 const KEEP_DEFAULT = 30;
 const KEEP_MAX = 999;
 
@@ -52,6 +58,7 @@ function normalizeSettings(raw) {
   const out = {
     exportFolder: nonEmptyString(s.exportFolder, app.getPath('downloads')),
     fontSize: clampInt(s.fontSize, FONT_MIN, FONT_MAX, FONT_DEFAULT),
+    fontFamily: FONT_FAMILIES.includes(s.fontFamily) ? s.fontFamily : FONT_FAMILY_DEFAULT,
     backupInterval: Object.prototype.hasOwnProperty.call(BACKUP_INTERVALS, s.backupInterval) ? s.backupInterval : '1d',
     backupFolder: nonEmptyString(s.backupFolder, defaultBackupFolder()),
     backupKeep: clampInt(s.backupKeep, 1, KEEP_MAX, KEEP_DEFAULT),
@@ -107,6 +114,8 @@ function publicSettings() {
     fontMin: FONT_MIN,
     fontMax: FONT_MAX,
     fontDefault: FONT_DEFAULT,
+    fontFamily: s.fontFamily,
+    fontFamilyDefault: FONT_FAMILY_DEFAULT,
     backupInterval: s.backupInterval,
     backupFolder: s.backupFolder,
     backupKeep: s.backupKeep,
@@ -473,6 +482,11 @@ ipcMain.handle('reset-export-folder', async () => {
 
 ipcMain.handle('set-font-size', async (_event, size) => {
   updateSettings({ fontSize: size });
+  return { ok: true, settings: publicSettings() };
+});
+
+ipcMain.handle('set-font-family', async (_event, family) => {
+  updateSettings({ fontFamily: family });
   return { ok: true, settings: publicSettings() };
 });
 

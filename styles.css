@@ -214,6 +214,7 @@ button, input, textarea, select {
   padding: 6px;
   font-size: 13px;
   line-height: 1.5;
+  /* Default; overridden inline by the Font setting (applied to both so find highlights line up) */
   font-family: Roboto, "Segoe UI", Arial, sans-serif;
   letter-spacing: normal;
   white-space: pre-wrap;
@@ -442,6 +443,20 @@ button, input, textarea, select {
   align-items: center;
   gap: 6px;
   margin-bottom: 8px;
+}
+
+.font-label {
+  width: 36px;
+  font-size: 13px;
+  color: #ccc;
+}
+
+#font-family {
+  min-width: 190px;
+}
+
+#font-family option {
+  font-size: 14px;
 }
 
 .btn-small {

@@ -10,6 +10,7 @@ contextBridge.exposeInMainWorld('scratchPad', {
   pickExportFolder: () => ipcRenderer.invoke('pick-export-folder'),
   resetExportFolder: () => ipcRenderer.invoke('reset-export-folder'),
   setFontSize: (size) => ipcRenderer.invoke('set-font-size', size),
+  setFontFamily: (family) => ipcRenderer.invoke('set-font-family', family),
   setBackupOptions: (opts) => ipcRenderer.invoke('set-backup-options', opts),
   pickBackupFolder: () => ipcRenderer.invoke('pick-backup-folder'),
   resetBackupFolder: () => ipcRenderer.invoke('reset-backup-folder'),
